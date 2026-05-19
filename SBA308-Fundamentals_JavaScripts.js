@@ -106,6 +106,28 @@ const LearnerSubmissions = [
     const leanerIds = LearnerSubmissions.map(submission => submission.learner_id);
     console.log('1. Learner Ids:', leanerIds);
 
+    // 2.the learner’s total, weighted average, in which assignments
+    // A) turn each submission into an array
+    const submissionArray = LearnerSubmissions.map(item => [ //.map function to turn each submission into an array. Ordered values. 
+        item.learner_id,
+        item.assignment_id,
+        item.submission.submitted_at,
+        item.submission.score
+    ]);
+    console.log('2. Submission Array:', submissionArray);
+
+    // B) Learner's total score 
+    const sumScores = {}; // Create empty object to store the sum of scores for each learner
+    LearnerSubmissions.forEach(item => { // .forEach loop function to calculate the sum of scores for each learner.
+        const id = item.learner_id; // gets each learner's ID.  
+        const score = item.submission.score; // get each learner's assignments score.
+        if (!sumScores[id]) { // verifies if leaners exists in object, if not, it initializes the score to 0.
+            sumScores[id] = 0;
+        }
+        sumScores[id] += score; // adds new score to the learners existing score in the sumScores object.
+    });  // This loop iterates through each submission, checks if the learner's ID already exists in the sumScores object, and if not, initializes it to 0. Then add new score to total score for that learner in the sumScores object.
+    
+    console.log('2. Learner Sum of Total Scores:', sumScores);
 
 
 
