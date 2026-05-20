@@ -102,4 +102,37 @@ const LearnerSubmissions = [
 // console.log(result);
 
 
+    // 1. the ID of the learner for which this data has been collected. Use of .map function to get the learner IDs from the LearnerSubmissions array.
+    const learnerIds = LearnerSubmissions.map(submission => submission.learner_id); // use arrow f(x) extracts ID and creates new array of learner IDs.
+    console.log('1. Learner Ids:', learnerIds);
+
+    // checks for learner ID in the array (make sure they are unique).
+
+        const submissionArray = LearnerSubmissions.map(item => [ //.map function to turn each submission into an array. Ordered values. 
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+        item.learner_id,
+        item.assignment_id,
+        item.submission.submitted_at,
+        item.submission.score
+  
+    ]);
+    console.log('2. Submission Array:', submissionArray);
+    if (learnerIds.includes(submissionArray.learner_id) !== true) {
+      learnerIds.push(submissionArray.learner_id); // if the learner ID is not already in the array, it adds it to the array.
+    }
+
+    // 2.the learner’s total, weighted average, in which assignments
+    // A) turn each submission into an array
+    const learnersTotalScores = {}; // Create empty object to store the total scores for ea/learner.
+
+    LearnerSubmissions.forEach(submission => { // .forEach loop function to iterate through each submission in the LearnerSubmissions array.
+        const id = submission.learner_id; // gets each learner's ID from array data submissions.learner_id.
+        const score = submission.submission.score; // get each learner's assignments score.
+        if (!learnersTotalScores[id]) { // verifies learners if ID already exists in the learnerTotalScores object. If it does not exist, it initializes it to 0.
+            learnersTotalScores[id] = 0;
+        }
+
+        learnersTotalScores[id] += score; // Total scores are added  for that learner. Id 125: 47+150+400 = 597. Id 132: 39+140 = 179.
+    });
+    console.log('3. Learners Total Scores:', learnersTotalScores);
 
