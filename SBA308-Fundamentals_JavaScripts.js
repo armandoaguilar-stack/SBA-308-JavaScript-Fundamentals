@@ -201,15 +201,35 @@ const LearnerSubmissions = [
     // If an assignment due date has not happened yet, DO NOT include assignment. 
     const currentDate = new Date(); // Get the current date.
     console.log("Current Date:", currentDate);
-
-    const validSubmissions = LearnerSubmissions.filter(submission => { // Verify the due date has passed from due date for each submission. Current Date > Due Date. 
     
-      // Find the corresponding assignment for each submission to get the due date. Assign.id must match submission.assignment_id. 
-      const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id); 
+    const validSubmissions = []; // Create empty array to store valid submissions where due date has passed.
+    
+    // Filter submissions where due date has passed
+    LearnerSubmissions.forEach(submission => {
+      const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id); // Assign.id must match submission.assignment_id.
 
-      if (!assignment) return false;  // When an assignment is not found, return false and exclude from valid submissions.
+      if (!assignment) return; // When an assignment is not found, skip this submission.
       const dueDate = new Date(assignment.due_at); // Convert the due date string to a Date object for comparison.
-      return dueDate <= currentDate; // Add submission if due date passed. Current Date > Due Date.
+      if (dueDate <= currentDate) { // Add submission if due date passed. Current Date > Due Date.
+        validSubmissions.push(submission);
+      }
     });
 
+    // Create final results for each learner
+    const results = {}; // Create empty object to store the final results for each learner.
+    
+    const uniqueLearnerIds = [...new Set(LearnerSubmissions.map(sub => sub.learner_id))];
+    
+    for (let id of uniqueLearnerIds) { // Loop through each learner ID.
+      if (learnersWAvgScores[id] && learnersWAvgScores[id].totalPossible > 0) {
+        results[id] = {
+          id: id,
+          avg: learnersWAvgScores[id].totalEarned / learnersWAvgScores[id].totalPossible,
+          ...learnersAssignmentAvgs[id]
+        };
+      }
+    }
+
     console.log('6. Submissions Due Date Has Passed - Valid:', validSubmissions);
+    console.log('7. Learners Results:', results); // Final results for each learner with their avg scores and assignment avgs. 
+    
