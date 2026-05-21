@@ -123,19 +123,30 @@ const LearnerSubmissions = [
 
     // 2.the learner’s total, weighted average, in which assignments
     // A) turn each submission into an array
+    //Blocker: Using loops and utilizing the continue statement to skip over any submissions that have an undefined score.
+    // Loops ea/submission. If score is undefined or null, skip to next submission. Otherwise, add score to total for that learner.
+
     const learnersTotalScores = {}; // Create empty object to store the total scores for ea/learner.
 
-    LearnerSubmissions.forEach(submission => { // .forEach loop function to iterate through each submission in the LearnerSubmissions array.
+    for (let i = 0; i < LearnerSubmissions.length; i++) {
 
-        const id = submission.learner_id; // gets each learner's ID from array data submissions.learner_id.
-        const score = submission.submission.score; // get each learner's assignments score.
-        if (!learnersTotalScores[id]) { // verifies learners if ID already exists in the learnerTotalScores object. If it does not exist, it initializes it to 0.
-            learnersTotalScores[id] = 0;
-        }
+    const submission = LearnerSubmissions[i];
 
-        learnersTotalScores[id] += score; // Total scores are added  for that learner. Id 125: 47+150+400 = 597. Id 132: 39+140 = 179.
-    });
-    console.log('3. Learners Total Scores:', learnersTotalScores);
+    const id = submission.learner_id;
+    const score = submission.submission?.score;
+
+    if (learnersTotalScores === undefined || score === null) {
+      continue; // Skip this submission if score is undefined or null.
+    }
+
+    if (!learnersTotalScores[id]) {
+        learnersTotalScores[id] = 0;
+    }
+
+    learnersTotalScores[id] += score;
+}
+
+console.log('3. Learners Total Scores:', learnersTotalScores);
 
 
     // B) Calculating the weighted Avg for each learner in data array. 
@@ -266,8 +277,8 @@ const LearnerSubmissions = [
         lateAssign.push(assignment.id); // Track late assignments
         console.log(`8.Late submission ${id} on assignment ${assignment.id}. Gives 10% penalty.`);
         console.log('Learner 125 Late Assign ID Number:', lateAssign);
-        console.log('Late Assignment New Score:', submission.submission.score * 0.90); // Newscore after 10% penalty. Score = score - (score * 0.10) 
-        console.log('New Total Score with 10% Penalty:', submission.submission.score * 0.90 + PtsAssingment1); 
+        console.log('Late Assignment New Score):', submission.submission.score * 0.90); // Newscore after 10% penalty. Score = score - (score * 0.10) 
+        console.log('New Total Score with 10% Penalty  ((140*0.9)+39 = 165):', submission.submission.score * 0.90 + PtsAssingment1); 
 
          
         // Late penalty of 10% of possible points
