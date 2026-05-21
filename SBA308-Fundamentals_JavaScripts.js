@@ -232,4 +232,10 @@ const LearnerSubmissions = [
 
     console.log('6. Submissions Due Date Has Passed - Valid:', validSubmissions);
     console.log('7. Learners Results:', results); // Final results for each learner with their avg scores and assignment avgs. 
+
+    if (AssignmentGroup.course_id !== CourseInfo.id) {
+      //course_id in AssignmentGroup must match course id in CourseInfo. If not, log error message.
+      console.error(`Warning - Error: AssignmentGroup course_id ${AssignmentGroup.course_id} does not match course id ${CourseInfo.id}.`);  
+    }
+
     
