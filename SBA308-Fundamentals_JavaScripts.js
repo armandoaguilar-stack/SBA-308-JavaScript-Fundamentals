@@ -255,6 +255,15 @@ const LearnerSubmissions = [
 
       if (dueDate > currentDate1) ; // Skip if assignment due date has not passed.
 
+          const id = submission.learner_id; // Get learner ID from submission.
+
+      let score = submission.submission.score; // Get score from submission.
+      const possiblePts = assignment.points_possible; // Get points possible for the assignment.
+
+      if (submissionDate > dueDate) {
+        lateAssign.push(assignment.id); // Track late assignments
+        console.log(`8.Late submission ${id} on assignment ${assignment.id}. Gives 10% penalty.`);
+         console.log('Late Assign Number:', lateAssign);
 
    
   
