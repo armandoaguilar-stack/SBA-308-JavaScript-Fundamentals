@@ -245,6 +245,8 @@ const LearnerSubmissions = [
 
     const learners1 = {};
     const lateAssign = []; 
+    const PtsAssingment1 = LearnerSubmissions.find(
+      submission => submission.learner_id === 132 && submission.assignment_id === 1)?.submission.score; // Get points for assignment 1 from submissions.
     const currentDate1 = new Date();
     LearnerSubmissions.forEach(submission => {
       const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id);
@@ -263,8 +265,25 @@ const LearnerSubmissions = [
       if (submissionDate > dueDate) {
         lateAssign.push(assignment.id); // Track late assignments
         console.log(`8.Late submission ${id} on assignment ${assignment.id}. Gives 10% penalty.`);
-         console.log('Late Assign Number:', lateAssign);
+        console.log('Learner 125 Late Assign ID Number:', lateAssign);
+        console.log('Late Assignment New Score:', submission.submission.score * 0.90); // Newscore after 10% penalty. Score = score - (score * 0.10) 
+        console.log('New Total Score with 10% Penalty:', submission.submission.score * 0.90 + PtsAssingment1); 
 
+         
+        // Late penalty of 10% of possible points
+        score -= possiblePts * 0.10; //-10% assign for late submission from possible points. score = score - (possiblePts * 0.10).
+        if (score < 0) score = 0; // Make sure score does not go below 0 after penalty.
+      }
+
+      // accumulate into learners1
+      if (!learners1[id]) learners1[id] = { totalEarned: 0, totalPossible: 0 };
+      learners1[id].totalEarned += score; 
+      learners1[id].totalPossible += possiblePts;
+    });
+
+    console.log('10. Learners Scores with 10% Late Penalties:', learners1);
+    
+  
    
   
     
