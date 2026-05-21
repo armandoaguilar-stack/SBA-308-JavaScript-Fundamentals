@@ -157,9 +157,30 @@ const LearnerSubmissions = [
             learnersWAvgScores[id] = { totalEarned: 0, totalPossible: 0 };
         }
 
-        learnersWAvgScores[id].totalEarned += score;
-        learnersWAvgScores[id].totalPossible += possiblePts;
+        learnersWAvgScores[id].totalEarned += score; // Total points earned are added for that learner. Id 125: 47+150+400 = 597. Id 132: 39+140 = 179.
+        learnersWAvgScores[id].totalPossible += possiblePts; // Pts possible are shown for each assignment per learner. 
     });
     console.log("4. Learners' WeightedAvg:", learnersWAvgScores);
     console.log("Learner 125 Weighted Average Score:", learnersWAvgScores[125].totalEarned / learnersWAvgScores[125].totalPossible);
     console.log("Learner 132 Weighted Average Score:", learnersWAvgScores[132].totalEarned / learnersWAvgScores[132].totalPossible);
+
+    // Avg for ea/assignment for each learner.
+    const learnersAssignmentAvgs = {}; // Create empty object to store the average scores for each assignment for each learner.
+
+    LearnerSubmissions.forEach(submission => { // .forEach loop function to iterate through each submission in the LearnerSubmissions array. Repeat as above.
+
+        const id = submission.learner_id; //repeat as previously.
+        const assignmentId = submission.assignment_id; // Assignment ID from submissions.
+
+        // Find corresponnding assignment that matches ID in AssignmentGroup.assignments array. 
+        const assign = AssignmentGroup.assignments.find
+        (assign => assign.id === assignmentId); 
+
+        if (!assign) {
+          HTMLFormControlsCollection.log(`Assignment with ID ${assignmentId} not found.`);
+          return; // Skip this submission if assignment not found.
+        }
+
+        
+    
+
