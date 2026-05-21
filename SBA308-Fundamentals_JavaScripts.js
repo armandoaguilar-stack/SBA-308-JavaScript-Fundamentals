@@ -181,6 +181,21 @@ const LearnerSubmissions = [
           return; // Skip this submission if assignment not found.
         }
 
-        
+        const possiblePts = assign.points_possible; // Get points possible for each assignment.
+
+        if (!learnersAssignmentAvgs[id]) { 
+          learnersAssignmentAvgs[id] = {};
+        }
+
+        if (!learnersAssignmentAvgs[id][assignmentId]) {
+          learnersAssignmentAvgs[id][assignmentId] = { totalEarned: 0, totalPossible: 0 };
+        }
+
+        //Total earned added for each learner and assignment. Total possible scores for each learner. 
+        learnersAssignmentAvgs[id][assignmentId].totalEarned += submission.submission.score;
+        learnersAssignmentAvgs[id][assignmentId].totalPossible += possiblePts;
+        // Find avg for each assignment for each learner.
+        learnersAssignmentAvgs[id][assignmentId].average = learnersAssignmentAvgs[id][assignmentId].totalEarned / learnersAssignmentAvgs[id][assignmentId].totalPossible; });
+    console.log("5. Learners' Each Assignment Avgs:", learnersAssignmentAvgs);
     
 
