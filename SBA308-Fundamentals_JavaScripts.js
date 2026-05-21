@@ -238,4 +238,19 @@ const LearnerSubmissions = [
       console.error(`Warning - Error: AssignmentGroup course_id ${AssignmentGroup.course_id} does not match course id ${CourseInfo.id}.`);  
     }
 
+    //Ommiting assignments which are not due yet. Only include assignments where due date has passed.
+    function leanerScoreCalculation(course, AssignmentGroup, LearnerSubmissions) {
+      throw new Error("Not Valud Input: AssignmentGroup course_id does not match CourseInfo id.");
+    }
+
+    const learners1 = {};
+    const lateAssign = []; 
+    const currentDate1 = new Date();
+    LearnerSubmissions.forEach(submission => {
+      const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id);
+      if (!assignment) throw new Error(`Assignment with ID ${submission.assignment_id} not found.`);
+
+
+   
+  
     
