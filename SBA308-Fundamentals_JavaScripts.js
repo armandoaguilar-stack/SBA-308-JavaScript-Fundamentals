@@ -204,4 +204,12 @@ const LearnerSubmissions = [
 
     const validSubmissions = LearnerSubmissions.filter(submission => { // Verify the due date has passed from due date for each submission. Current Date > Due Date. 
     
+      // Find the corresponding assignment for each submission to get the due date. Assign.id must match submission.assignment_id. 
+      const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id); 
 
+      if (!assignment) return false;  // When an assignment is not found, return false and exclude from valid submissions.
+      const dueDate = new Date(assignment.due_at); // Convert the due date string to a Date object for comparison.
+      return dueDate <= currentDate; // Add submission if due date passed. Current Date > Due Date.
+    });
+
+    console.log('6. Submissions Due Date Has Passed - Valid:', validSubmissions);
