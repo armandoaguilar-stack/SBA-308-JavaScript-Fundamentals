@@ -250,6 +250,11 @@ const LearnerSubmissions = [
       const assignment = AssignmentGroup.assignments.find(assign => assign.id === submission.assignment_id);
       if (!assignment) throw new Error(`Assignment with ID ${submission.assignment_id} not found.`);
 
+            const dueDate = new Date(assignment.due_at);
+      const submissionDate = new Date(submission.submission.submitted_at);
+
+      if (dueDate > currentDate1) ; // Skip if assignment due date has not passed.
+
 
    
   
