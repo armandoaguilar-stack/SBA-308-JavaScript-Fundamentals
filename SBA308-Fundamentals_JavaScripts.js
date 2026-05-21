@@ -197,5 +197,11 @@ const LearnerSubmissions = [
         // Find avg for each assignment for each learner.
         learnersAssignmentAvgs[id][assignmentId].average = learnersAssignmentAvgs[id][assignmentId].totalEarned / learnersAssignmentAvgs[id][assignmentId].totalPossible; });
     console.log("5. Learners' Each Assignment Avgs:", learnersAssignmentAvgs);
+
+    // If an assignment due date has not happened yet, DO NOT include assignment. 
+    const currentDate = new Date(); // Get the current date.
+    console.log("Current Date:", currentDate);
+
+    const validSubmissions = LearnerSubmissions.filter(submission => { // Verify the due date has passed from due date for each submission. Current Date > Due Date. 
     
 
