@@ -126,6 +126,7 @@ const LearnerSubmissions = [
     const learnersTotalScores = {}; // Create empty object to store the total scores for ea/learner.
 
     LearnerSubmissions.forEach(submission => { // .forEach loop function to iterate through each submission in the LearnerSubmissions array.
+
         const id = submission.learner_id; // gets each learner's ID from array data submissions.learner_id.
         const score = submission.submission.score; // get each learner's assignments score.
         if (!learnersTotalScores[id]) { // verifies learners if ID already exists in the learnerTotalScores object. If it does not exist, it initializes it to 0.
@@ -136,3 +137,29 @@ const LearnerSubmissions = [
     });
     console.log('3. Learners Total Scores:', learnersTotalScores);
 
+
+    // B) Calculating the weighted Avg for each learner in data array. 
+    // Approach: Total points earned / points possible for all assignments. 
+    const learnersWAvgScores = {}; // Create empty object to store the weighted avg scores for each learner.
+
+    LearnerSubmissions.forEach(submission => { // .forEach loop function to iterate through each submission in the LearnerSubmissions array. Repeat as above.
+
+        const id = submission.learner_id; // gets each learner's ID from array data submissions.learner_id.
+        const score = submission.submission.score; // get each learner's assignments score.
+        const possiblePts = AssignmentGroup.assignments.find(assignment => assignment.id === submission.assignment_id)?.points_possible || 0; 
+        // get the points possible for the assignment.
+        //.AssignmentGroup.assignments is array of assignments. 
+        // .find() looks and matches the assigment ID in submissions with above array line 151. If matches, access pts possible for assignment. Otherwise, return 0 (if assignment not found).
+        // Arrow f(x) checks every assigment until it finds the one with the matching ID.
+        // || 0 fallback value if assigment ID not found. Prevent errors = never undefined. 
+
+        if (!learnersWAvgScores[id]) { // verifies learners if ID already exists in the learnersWAvgScores object. If it does not exist, it initializes it to 0.
+            learnersWAvgScores[id] = { totalEarned: 0, totalPossible: 0 };
+        }
+
+        learnersWAvgScores[id].totalEarned += score;
+        learnersWAvgScores[id].totalPossible += possiblePts;
+    });
+    console.log("4. Learners' WeightedAvg:", learnersWAvgScores);
+    console.log("Learner 125 Weighted Average Score:", learnersWAvgScores[125].totalEarned / learnersWAvgScores[125].totalPossible);
+    console.log("Learner 132 Weighted Average Score:", learnersWAvgScores[132].totalEarned / learnersWAvgScores[132].totalPossible);
